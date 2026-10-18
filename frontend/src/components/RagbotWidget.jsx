@@ -157,6 +157,19 @@ const RagbotWidget = () => {
                 {answer}
               </div>
             )}
+
+            {answer && (
+              <button
+                className="rag-new-btn"
+                onClick={() => {
+                  setQuestion('');
+                  setAnswer('');
+                  setError('');
+                }}
+              >
+                🔄 Ask New Question
+              </button>
+            )}
           </div>
         </div>
       )}

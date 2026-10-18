@@ -34,6 +34,12 @@ const Navbar = () => {
       <div style={styles.auth}>
         {token && user ? (
           <>
+            <Link
+              to={user.role === 'lawyer' ? '/lawyer-dashboard' : user.role === 'admin' ? '/admin-panel' : '/client-dashboard'}
+              style={styles.link}
+            >
+              Dashboard
+            </Link>
             <span style={styles.userName}>Hello, {user.name}</span>
             <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
           </>

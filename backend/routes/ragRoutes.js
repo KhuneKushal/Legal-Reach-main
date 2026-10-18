@@ -51,12 +51,20 @@ const ensureWorker = async () => {
     });
   }
 
-  for (let i = 0; i < 12; i += 1) {
-    if (await isWorkerAlive()) return;
+  // Worker needs time to load vector store (2431+ docs) and initialize LLM models.
+  // Wait up to 60 seconds for it to become ready.
+  for (let i = 0; i < 60; i += 1) {
+    if (await isWorkerAlive()) {
+      console.log(`[RAG] Worker became ready after ~${i}s`);
+      return;
+    }
+    if (i % 5 === 0 && i > 0) {
+      console.log(`[RAG] Still waiting for worker to start... (${i}s elapsed)`);
+    }
     await sleep(1000);
   }
 
-  throw new Error('RAG worker did not become ready in time.');
+  throw new Error('RAG worker did not become ready in time (60s timeout). Is Ollama running?');
 };
 
 const callWorker = async (endpoint, body) => {

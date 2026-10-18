@@ -105,13 +105,13 @@ def answer_from_session(session_id: str, question: str):
     embeddings_norm = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
     query_norm = query_embedding / np.linalg.norm(query_embedding)
     similarities = np.dot(embeddings_norm, query_norm)
-    top_indices = np.argsort(similarities)[-5:][::-1]
+    top_indices = np.argsort(similarities)[-6:][::-1]
     selected_docs = [docs[i] for i in top_indices if i < len(docs)]
 
     context_lines = []
     for doc in selected_docs:
         context_lines.append(
-            f"[{doc.metadata.get('source')}, page {doc.metadata.get('page')}]\n{doc.page_content[:350]}"
+            f"[{doc.metadata.get('source')}, page {doc.metadata.get('page')}]\n{doc.page_content[:800]}"
         )
     context = "\n\n".join(context_lines)
     result = session_chain.invoke({"context": context, "question": question})

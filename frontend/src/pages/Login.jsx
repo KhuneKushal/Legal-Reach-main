@@ -21,8 +21,10 @@ const Login = () => {
       // REDIRECT BASED ON ROLE
       if (res.data.user.role === 'lawyer') {
         navigate('/lawyer-dashboard');
+      } else if (res.data.user.role === 'admin') {
+        navigate('/admin-panel');
       } else {
-        navigate('/');
+        navigate('/client-dashboard');
       }
       
     } catch (err) {

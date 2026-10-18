@@ -14,7 +14,7 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_core.documents import Document
 
 # Local imports
-from config import DEFAULT_CONFIG, VECTORSTORE_DIR
+from config import DEFAULT_CONFIG, VECTORSTORE_DIR, LEGAL_PDFS_DIR, LEGAL_DOCX_DIR, LEGAL_TXT_DIR
 from document_processor import process_legal_documents
 
 # Setup logging
@@ -155,8 +155,22 @@ def build_vectorstore():
     
     # Check if we need to load or create
     vectors_exist = os.path.exists(vector_store.vectors_path)
+    needs_rebuild = not vectors_exist
     
     if vectors_exist:
+        vector_mtime = os.path.getmtime(vector_store.vectors_path)
+        for doc_dir in [LEGAL_PDFS_DIR, LEGAL_DOCX_DIR, LEGAL_TXT_DIR]:
+            if doc_dir.exists():
+                for ext in DEFAULT_CONFIG.document.supported_formats:
+                    for f in doc_dir.glob(f"*{ext}"):
+                        if os.path.getmtime(f) > vector_mtime:
+                            logger.info(f"New or updated document detected: {f.name}")
+                            needs_rebuild = True
+                            break
+            if needs_rebuild:
+                break
+    
+    if not needs_rebuild:
         logger.info("[OK] Loading existing vector store...")
         vector_store._load()
     else:

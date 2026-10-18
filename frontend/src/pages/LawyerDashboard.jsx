@@ -48,31 +48,31 @@ const LawyerDashboard = () => {
 
     socketRef.current = connectSocket(user._id, token);
 
-    // Attach listeners only once
-    if (!listenersAttachedRef.current) {
-      socketRef.current.on("connect", () => {
-        console.log("✅ Lawyer Dashboard: Socket connected");
-      });
+    const handleConnect = () => {
+      console.log("✅ Lawyer Dashboard: Socket connected");
+    };
 
-      socketRef.current.on("connect_error", (error) => {
-        console.error("❌ Lawyer Dashboard: Socket connection error:", error);
-        setError("Connection failed. Please refresh and try again.");
-      });
+    const handleConnectError = (error) => {
+      console.error("❌ Lawyer Dashboard: Socket connection error:", error);
+      setError("Connection failed. Please refresh and try again.");
+    };
 
-      socketRef.current.on("incoming_call_offer", (data) => {
-        const accept = window.confirm(`${data.callerName} is calling you (${data.callType}). Accept?`);
-        if (accept) {
-          navigate(`/video-call?roomId=${data.roomId}&userName=${user.name}`);
-        }
-      });
+    const handleIncomingCall = (data) => {
+      const accept = window.confirm(`${data.callerName} is calling you (${data.callType}). Accept?`);
+      if (accept) {
+        navigate(`/video-call?roomId=${data.roomId}&userName=${user.name}`);
+      }
+    };
 
-      listenersAttachedRef.current = true;
-    }
+    socketRef.current.on("connect", handleConnect);
+    socketRef.current.on("connect_error", handleConnectError);
+    socketRef.current.on("incoming_call_offer", handleIncomingCall);
 
     return () => {
-      if (socketRef.current && listenersAttachedRef.current) {
-        socketRef.current.off("incoming_call_offer");
-        listenersAttachedRef.current = false;
+      if (socketRef.current) {
+        socketRef.current.off("connect", handleConnect);
+        socketRef.current.off("connect_error", handleConnectError);
+        socketRef.current.off("incoming_call_offer", handleIncomingCall);
       }
     };
   }, [user?._id, token, navigate]);

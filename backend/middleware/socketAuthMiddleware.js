@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
+import NewLawyer from '../models/NewLawyer.js';
 
 export const socketAuthMiddleware = async (socket, next) => {
   try {
@@ -10,14 +11,21 @@ export const socketAuthMiddleware = async (socket, next) => {
     }
     
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select('-password');
     
-    if (!user) {
-      return next(new Error('User not found'));
+    // First try to find a User
+    let account = await User.findById(decoded.id).select('-password');
+    
+    // If not a user, try to find a NewLawyer
+    if (!account) {
+      account = await NewLawyer.findById(decoded.id).select('-password');
     }
     
-    socket.userId = user._id.toString();
-    socket.user = user;
+    if (!account) {
+      return next(new Error('Account not found'));
+    }
+    
+    socket.userId = account._id.toString();
+    socket.user = account; // works for both User and NewLawyer
     
     next();
   } catch (error) {

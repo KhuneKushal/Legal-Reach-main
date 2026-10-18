@@ -136,7 +136,7 @@ class VectorStoreConfig:
     persist_directory: str = str(VECTORSTORE_DIR)
     
     # Search settings
-    retrieval_k: int = 4  # Top 4 chunks for legal context
+    retrieval_k: int = 6  # Top 6 chunks for broader legal context
     distance_metric: str = "cosine"  # Similarity metric
     
     # For future FAISS option:

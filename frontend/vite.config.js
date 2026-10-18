@@ -18,6 +18,18 @@ export default defineConfig({
         target: process.env.VITE_PROXY_TARGET || 'http://localhost:5000',
         changeOrigin: true,
         secure: false
+      },
+      '/socket.io': {
+        target: process.env.VITE_PROXY_TARGET || 'http://localhost:5000',
+        ws: true,
+        changeOrigin: true,
+        secure: false
+      },
+      '/peerjs': {
+        target: 'http://localhost:9000',
+        ws: true,
+        changeOrigin: true,
+        secure: false
       }
     }
   },

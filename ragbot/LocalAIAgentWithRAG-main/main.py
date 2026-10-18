@@ -90,9 +90,9 @@ def format_documents(docs):
     for i, doc in enumerate(docs, 1):
         source = doc.metadata.get('source', 'Unknown')
         page = doc.metadata.get('page', 'N/A')
-        content = doc.page_content[:180]  # Keep context shorter for faster generation
+        content = doc.page_content[:800]  # Give the LLM enough context to answer accurately
         
-        formatted.append(f"[Document {i}] {source} (Page {page}):\n{content}...")
+        formatted.append(f"[Document {i}] {source} (Page {page}):\n{content}")
     
     return "\n\n".join(formatted)
 
@@ -130,10 +130,14 @@ def answer_legal_question(question):
     
     # Add source information
     answer_with_sources = f"{result}\n\n--- SOURCES ---\n"
-    for doc in retrieved_docs[:3]:  # Show top 3 sources
+    seen_sources = set()
+    for doc in retrieved_docs:  # Show all unique sources
         source = doc.metadata.get('source', 'Unknown')
         page = doc.metadata.get('page', 'N/A')
-        answer_with_sources += f"• {source} (Page {page})\n"
+        source_key = f"{source}_p{page}"
+        if source_key not in seen_sources:
+            seen_sources.add(source_key)
+            answer_with_sources += f"• {source} (Page {page})\n"
     
     return answer_with_sources
 

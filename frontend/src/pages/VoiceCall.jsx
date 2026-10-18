@@ -132,7 +132,7 @@ const VoiceCall = () => {
       })
       .catch((err) => {
         console.error('Media error:', err);
-        alert('Camera or microphone access is required for the call.');
+        alert('Camera or microphone access failed. Error: ' + err.name + ' - ' + err.message);
         navigate(-1);
       });
 

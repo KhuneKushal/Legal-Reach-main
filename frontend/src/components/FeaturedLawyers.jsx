@@ -1,5 +1,6 @@
 import React from 'react';
 import './FeaturedLawyers.css';
+import lawyerImg from '../assets/lawyer_profile.jpg';
 
 const lawyers = [
   {
@@ -7,21 +8,21 @@ const lawyers = [
     name: "Adv. Amit Sharma",
     specialty: "Criminal Lawyer",
     experience: "12 Years Experience",
-    image: "", 
+    image: lawyerImg, 
   },
   {
     id: 2,
     name: "Adv. Priya Desai",
     specialty: "Family & Divorce",
     experience: "8 Years Experience",
-    image: "",
+    image: lawyerImg,
   },
   {
     id: 3,
     name: "Adv. Rajesh Verma",
     specialty: "Corporate Law",
     experience: "15 Years Experience",
-    image: "",
+    image: lawyerImg,
   },
 ];
 

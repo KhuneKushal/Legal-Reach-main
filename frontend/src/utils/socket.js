@@ -1,6 +1,5 @@
 import io from 'socket.io-client';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+import { SOCKET_URL } from './config';
 
 let socket = null;
 let lastUserId = null;
@@ -8,9 +7,10 @@ let lastToken = null;
 
 export const connectSocket = (userId, token) => {
   // Reuse existing connection if credentials match
-  if (socket && socket.connected && lastUserId === userId && lastToken === token) {
-    console.log('Reusing existing socket connection');
-    socket.emit('join_room', userId);
+  if (socket && lastUserId === userId && lastToken === token) {
+    if (socket.connected) {
+      socket.emit('join_room', userId);
+    }
     return socket;
   }
 
@@ -22,11 +22,14 @@ export const connectSocket = (userId, token) => {
   }
 
   // Create new socket if no existing connection
-  if (!socket || !socket.connected) {
+  if (!socket) {
     lastUserId = userId;
     lastToken = token;
 
-    socket = io(API_BASE_URL, {
+    // If SOCKET_URL is empty (dev mode), pass undefined so socket.io connects to current origin
+    const connectionUrl = SOCKET_URL || undefined;
+
+    socket = io(connectionUrl, {
       auth: { token },
       reconnection: true,
       reconnectionDelay: 1000,

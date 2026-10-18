@@ -16,6 +16,7 @@ import AdminPanel from './pages/AdminPanel';
 import FindLawyers from './pages/FindLawyers';
 import LawyerDetails from './pages/LawyerDetails';
 import ForgotPassword from './pages/ForgotPassword';
+import UserDashBoard from './pages/UserDashBoard';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/find-lawyers" element={<FindLawyers />} />
         <Route path="/lawyer/:id" element={<LawyerDetails />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/client-dashboard" element={<UserDashBoard />} />
       </Routes>
     </Router>
   );

@@ -26,20 +26,28 @@
   padding: 25px;
   width: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .lawyer-card:hover {
+  transform: translateY(-5px);
   box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
 }
 
 .lawyer-img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%; /* Circle shape */
   object-fit: cover;
-  margin-bottom: 15px;
-  border: 3px solid #eff6ff;
+  object-position: center;
+  margin: 0 auto 15px auto;
+  border: 4px solid #eff6ff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .lawyer-card h3 {

@@ -238,7 +238,7 @@ const LawyerDetails = () => {
               placeholder="Type a message..." 
               value={chatMessage} 
               onChange={(e) => setChatMessage(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
             />
             <button onClick={sendMessage}>Send</button>
             <button onClick={startVideoCall} title="Video Call">📹</button>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { connectSocket, getSocket, disconnectSocket } from '../utils/socket';
+import API_BASE_URL from '../utils/config';
 import './ChatPage.css';
 
 const ChatPage = () => {
@@ -87,7 +88,7 @@ const ChatPage = () => {
     // Fetch chat history
     const fetchChatHistory = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/chat/history/${receiverId}`, {
+        const response = await axios.get(`${API_BASE_URL}/api/chat/history/${receiverId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setChatHistory(response.data);
@@ -237,7 +238,7 @@ const ChatPage = () => {
           placeholder={isConnected ? "Type a message..." : "Connecting..."}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && sendMsg()}
+          onKeyDown={(e) => e.key === 'Enter' && sendMsg()}
           disabled={!isConnected}
         />
         <button onClick={sendMsg} className="send-btn" disabled={!isConnected}>

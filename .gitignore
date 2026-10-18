@@ -1,39 +1,68 @@
-# Node.js (Frontend & Backend)
+# ============================================================
+# Legal-Reach — .gitignore
+# ============================================================
+
+# ─── Node.js (Frontend & Backend) ───────────────────────────
 node_modules/
-npm-debug.log
-yarn-error.log
+npm-debug.log*
+yarn-error.log*
 dist/
 build/
 .next/
+*.log
 
-# Python / LocalAIAgentWithRAG-main (Ragbot)
-__pycache__/
-*.py[cod]
-*$py.class
+# ─── Python / Ragbot Virtual Environment ────────────────────
+# Exclude the entire venv folder tree inside ragbot/
+ragbot/Include/
+ragbot/Lib/
+ragbot/Scripts/
+ragbot/share/
+ragbot/pyvenv.cfg
+
+# Standard Python venv/env folder names
 venv/
 env/
 .venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
 pip-log.txt
 .ipynb_checkpoints/
 
-# Local Vector Databases / RAG data (if applicable)
+# ─── Ragbot: Vector Store & Generated Data ──────────────────
+# Binary vector files (large; regenerated at runtime)
+ragbot/LocalAIAgentWithRAG-main/vectorstore/
+ragbot/LocalAIAgentWithRAG-main/logs/
 chroma_db/
 faiss_index/
 vector_store/
 local_db/
+*.npy
+*.pkl
 
-# Environment variables (DO NOT COMMIT SECRETS)
+# ─── Environment Variables (DO NOT COMMIT SECRETS) ──────────
 .env
+# Always allow example/template env files
+!.env.example
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# IDEs and Editors
+# ─── SSL Certs ───────────────────────────────────────────────
+.certs/
+*.pem
+*.key
+*.crt
+
+# ─── IDEs and Editors ────────────────────────────────────────
 .vscode/
 .idea/
 
-# OS generated files
+# ─── OS Generated Files ──────────────────────────────────────
 .DS_Store
 .DS_Store?
 Thumbs.db
+ehthumbs.db
