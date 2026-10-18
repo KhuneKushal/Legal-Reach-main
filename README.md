@@ -1,17 +1,17 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # ⚖️ Legal Reach
 
 **A full-stack platform connecting clients with legal professionals — powered by a local AI RAG chatbot.**
 
-[![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=nodedotjs)](https://nodejs.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite)](https://vitejs.dev/)
-[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python)](https://python.org/)
-[![LangChain](https://img.shields.io/badge/LangChain-RAG-1C3C3C?logo=langchain)](https://langchain.com/)
-[![Ollama](https://img.shields.io/badge/Ollama-llama3.2-000000)](https://ollama.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb)](https://mongodb.com/)
-[![Socket.IO](https://img.shields.io/badge/Socket.IO-4-010101?logo=socketdotio)](https://socket.io/)
+[![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://python.org/)
+[![LangChain](https://img.shields.io/badge/LangChain-RAG-1C3C3C)](https://langchain.com/)
+[![Ollama](https://img.shields.io/badge/Ollama-llama3.2-black)](https://ollama.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)](https://mongodb.com/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-4-010101?logo=socketdotio&logoColor=white)](https://socket.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 </div>
@@ -25,91 +25,98 @@
 The project is organized into **three independent services** that work together:
 
 | Service | Description |
-|---|---|
+| :--- | :--- |
 | `frontend/` | React 19 + Vite SPA — the client-facing UI |
 | `backend/` | Node.js + Express REST API & Socket.IO server |
-| `ragbot/LocalAIAgentWithRAG-main/` | Python RAG chatbot service (runs fully locally via Ollama) |
+| `ragbot/LocalAIAgentWithRAG-main/` | Python RAG chatbot (runs fully locally via Ollama) |
 
 ---
 
 ## ✨ Key Features
 
 ### 👤 Client Module
+
 - **Secure Auth** — JWT-based login/register with bcrypt password hashing
-- **Lawyer Search** — Filter lawyers by specialization, location, fees, and rating
+- **Lawyer Search** — Filter by specialization, location, fees, and rating
 - **Appointment Booking** — Real-time calendar slot selection
 - **Document Vault** — Upload legal documents (stored via Cloudinary)
-- **AI Legal Assistant (RAG Bot)** — Ask questions against a curated legal knowledge base *or* your own uploaded PDFs
-- **Video & Audio Calls** — Peer-to-peer calls powered by WebRTC (PeerJS / Simple-Peer)
+- **AI Legal Assistant (RAG Bot)** — Query a legal knowledge base *or* your own uploaded PDFs
+- **Video & Audio Calls** — Peer-to-peer WebRTC calls via PeerJS / Simple-Peer
 - **Live Chat** — Real-time messaging via Socket.IO
 
 ### 🧑‍⚖️ Lawyer Module
+
 - Professional profile management (bar council ID, fees, availability)
 - Calendar scheduling for appointments
 - Case & appointment dashboard
-- Client document access
+- Secure client document access
 
-### 🤖 RAG Bot (`ragbot/`)
-- Fully **offline** — no OpenAI API key needed; runs on your local machine using **Ollama**
-- Two query modes:
-  - **Knowledge Base mode** — queries against pre-loaded legal documents (Constitution of India, etc.)
+### 🤖 RAG Bot
+
+- Fully **offline** — no OpenAI key needed; runs locally using **Ollama**
+- **Two query modes:**
+  - **Knowledge Base mode** — queries pre-loaded legal documents (Constitution of India, etc.)
   - **Session mode** — upload any PDF and query it on the fly (in-memory per session)
-- Embeddings: **`mxbai-embed-large`** (via Ollama)
-- LLM: **`llama3.2`** (via Ollama)
+- Embeddings: **`mxbai-embed-large`** via Ollama
+- LLM: **`llama3.2`** via Ollama
 - Custom in-memory vector store with cosine similarity (NumPy)
-- Served as an HTTP API (`worker_server.py`) consumed by the frontend
+- Served as a lightweight HTTP API (`worker_server.py`) on port `8008`
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 | Library | Version | Purpose |
-|---|---|---|
+| :--- | :---: | :--- |
 | React | 19 | UI framework |
 | Vite | 7 | Build tool & dev server |
 | React Router DOM | 7 | Client-side routing |
-| React Redux | 9 | State management |
+| React Redux | 9 | Global state management |
 | Axios | 1 | HTTP client |
 | Socket.IO Client | 4 | Real-time communication |
-| PeerJS / Simple-Peer | latest | WebRTC video/audio |
+| PeerJS / Simple-Peer | latest | WebRTC video & audio |
 | Lucide React | 0.5 | Icon library |
 | Tailwind CSS | 4 | Utility-first styling |
 
 ### Backend
+
 | Library | Version | Purpose |
-|---|---|---|
-| Node.js | 18+ | Runtime |
+| :--- | :---: | :--- |
+| Node.js | 18+ | JavaScript runtime |
 | Express | 5 | REST API framework |
 | Mongoose | 9 | MongoDB ODM |
-| Socket.IO | 4 | WebSockets (chat + signaling) |
-| JWT | 9 | Authentication tokens |
+| Socket.IO | 4 | WebSockets — chat & signaling |
+| jsonwebtoken | 9 | JWT authentication |
 | bcryptjs | 3 | Password hashing |
-| Cloudinary | 2 | File/document storage |
+| Cloudinary | 2 | File & document storage |
 | Multer | 2 | File upload middleware |
 | Nodemailer | 7 | Email notifications |
 | selfsigned | 5 | HTTPS in development |
 
 ### RAG Bot (Python)
+
 | Library | Version | Purpose |
-|---|---|---|
+| :--- | :---: | :--- |
 | Python | 3.9+ | Runtime |
-| LangChain | ≥0.0.350 | RAG pipeline orchestration |
-| langchain-ollama | latest | Ollama integration |
+| LangChain | ≥ 0.0.350 | RAG pipeline orchestration |
+| langchain-ollama | latest | Ollama LLM & embeddings |
 | langchain-core | latest | Core abstractions |
 | langchain-text-splitters | latest | Document chunking |
-| Ollama (`llama3.2`) | — | Local LLM inference |
-| Ollama (`mxbai-embed-large`) | — | Local embeddings |
-| pypdf | ≥4 | PDF text extraction |
-| python-docx | ≥1 | DOCX text extraction |
-| NumPy | ≥1.21 | Vector math (cosine similarity) |
-| python-dotenv | ≥1 | Environment config |
+| Ollama `llama3.2` | — | Local LLM inference |
+| Ollama `mxbai-embed-large` | — | Local embeddings |
+| pypdf | ≥ 4 | PDF text extraction |
+| python-docx | ≥ 1 | DOCX text extraction |
+| NumPy | ≥ 1.21 | Vector math (cosine similarity) |
+| python-dotenv | ≥ 1 | Environment configuration |
 
 ### Infrastructure
+
 | Tool | Purpose |
-|---|---|
+| :--- | :--- |
 | MongoDB | NoSQL database |
-| Cloudinary | Document/image storage |
+| Cloudinary | Document & image storage |
 | Ollama | Local LLM & embedding server |
 
 ---
@@ -118,55 +125,49 @@ The project is organized into **three independent services** that work together:
 
 ```
 Legal-Reach-main/
-├── backend/                        # Node.js API server
-│   ├── config/                     # DB connection, etc.
-│   ├── middleware/                  # Auth, socket auth
-│   ├── models/                     # Mongoose schemas
-│   ├── routes/                     # Express route handlers
-│   │   ├── ragRoutes.js            # Proxy routes to RAG bot
-│   │   ├── callRoutes.js           # Video/audio call signaling
-│   │   └── chatRoutes.js           # Chat messages
-│   ├── uploads/                    # Temp upload folder
-│   ├── utils/                      # Helper utilities
-│   ├── index.js                    # Entry point
-│   ├── seedData.js                 # DB seed script
+├── backend/                          # Node.js API server
+│   ├── config/                       # DB connection config
+│   ├── middleware/                   # Auth & socket middleware
+│   ├── models/                       # Mongoose schemas
+│   ├── routes/
+│   │   ├── ragRoutes.js              # Proxy routes to RAG bot
+│   │   ├── callRoutes.js             # Video/audio call signaling
+│   │   └── chatRoutes.js             # Chat messages
+│   ├── utils/                        # Helper utilities
+│   ├── index.js                      # Server entry point
+│   ├── seedData.js                   # DB seed script
 │   └── package.json
 │
-├── frontend/                       # React + Vite SPA
-│   ├── src/
-│   │   ├── components/             # Reusable UI components
-│   │   │   ├── RagbotWidget.jsx    # AI chat widget
-│   │   │   ├── AudioVideoCall.jsx  # WebRTC call UI
-│   │   │   └── ...
-│   │   ├── pages/                  # Route-level pages
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── LawyerDashboard.jsx
-│   │   │   ├── LawyerDetails.jsx
-│   │   │   ├── VideoCall.jsx
-│   │   │   ├── VoiceCall.jsx
-│   │   │   ├── ChatPage.jsx
-│   │   │   └── ...
-│   │   ├── utils/                  # socket.js, config.js
-│   │   └── App.jsx
-│   ├── index.html
-│   └── vite.config.js
+├── frontend/                         # React + Vite SPA
+│   └── src/
+│       ├── components/
+│       │   ├── RagbotWidget.jsx      # AI chat floating widget
+│       │   ├── AudioVideoCall.jsx    # WebRTC call UI
+│       │   └── FeaturedLawyers.jsx
+│       ├── pages/
+│       │   ├── Dashboard.jsx
+│       │   ├── LawyerDashboard.jsx
+│       │   ├── LawyerDetails.jsx
+│       │   ├── VideoCall.jsx
+│       │   ├── VoiceCall.jsx
+│       │   └── ChatPage.jsx
+│       ├── utils/                    # socket.js, config.js
+│       └── App.jsx
 │
 └── ragbot/
-    └── LocalAIAgentWithRAG-main/   # Python RAG service
-        ├── legal_documents/        # Pre-loaded legal PDFs/TXT
-        │   ├── pdfs/               # e.g. Constitution of India.pdf
-        │   ├── docx/
-        │   └── txt/
-        ├── vectorstore/            # Auto-generated (gitignored)
-        ├── logs/                   # Runtime logs (gitignored)
-        ├── main.py                 # Core RAG pipeline & CLI
-        ├── worker_server.py        # HTTP API server (port 8008)
-        ├── vector.py               # Custom vector store
-        ├── document_processor.py   # PDF/DOCX/TXT ingestion
-        ├── config.py               # All configuration dataclasses
-        ├── api_query.py            # Quick query script
-        ├── requirements.txt        # Python dependencies
-        └── .env.example            # Config template
+    └── LocalAIAgentWithRAG-main/     # Python RAG service
+        ├── legal_documents/
+        │   ├── pdfs/                 # Drop PDF files here
+        │   ├── docx/                 # Drop DOCX files here
+        │   └── txt/                  # Drop TXT files here
+        ├── vectorstore/              # Auto-generated (gitignored)
+        ├── main.py                   # Core RAG pipeline & CLI
+        ├── worker_server.py          # HTTP API server (port 8008)
+        ├── vector.py                 # Custom vector store
+        ├── document_processor.py     # PDF/DOCX/TXT ingestion
+        ├── config.py                 # Configuration dataclasses
+        ├── requirements.txt          # Python dependencies
+        └── .env.example              # Config template
 ```
 
 ---
@@ -175,15 +176,17 @@ Legal-Reach-main/
 
 ### Prerequisites
 
-| Tool | Version | Install |
-|---|---|---|
+| Tool | Version | Link |
+| :--- | :---: | :--- |
 | Node.js | v18+ | [nodejs.org](https://nodejs.org) |
 | Python | 3.9+ | [python.org](https://python.org) |
-| MongoDB | any | [mongodb.com](https://mongodb.com) or Atlas cloud |
+| MongoDB | any | [mongodb.com](https://mongodb.com) or Atlas |
 | Ollama | latest | [ollama.com](https://ollama.com) |
 | Git | any | [git-scm.com](https://git-scm.com) |
 
-### 1. Clone the Repository
+---
+
+### Step 1 — Clone the Repository
 
 ```bash
 git clone https://github.com/KhuneKushal/Legal-Reach-main.git
@@ -192,14 +195,14 @@ cd Legal-Reach-main
 
 ---
 
-### 2. Setup the Backend
+### Step 2 — Setup the Backend
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in `backend/`:
+Create a `.env` file inside `backend/`:
 
 ```env
 PORT=5000
@@ -215,45 +218,49 @@ EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_app_password
 ```
 
-Start the backend:
+Start the server:
+
 ```bash
-# Development (with auto-restart)
+# Development (with auto-restart via nodemon)
 npm run dev
 
 # Production
 npm start
 ```
-> The backend runs on **`https://localhost:5000`** (self-signed SSL in dev).
+
+> Runs on **`https://localhost:5000`** (self-signed SSL in dev)
 
 ---
 
-### 3. Setup the Frontend
+### Step 3 — Setup the Frontend
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-Create a `.env` file in `frontend/`:
+Create a `.env` file inside `frontend/`:
 
 ```env
 VITE_BACKEND_URL=https://localhost:5000
 VITE_RAG_URL=http://localhost:8008
 ```
 
-Start the frontend:
+Start the dev server:
+
 ```bash
 npm run dev
 ```
-> The frontend runs on **`https://localhost:5173`** (Vite dev server with SSL).
+
+> Runs on **`https://localhost:5173`**
 
 ---
 
-### 4. Setup the RAG Bot (AI Legal Assistant)
+### Step 4 — Setup the RAG Bot
 
-#### 4.1 Install & Pull Ollama Models
+#### 4.1 Install Ollama & Pull Models
 
-First, [download and install Ollama](https://ollama.com/download). Then pull the required models:
+Download and install [Ollama](https://ollama.com/download), then pull the required models:
 
 ```bash
 # LLM for answering questions
@@ -263,10 +270,10 @@ ollama pull llama3.2
 ollama pull mxbai-embed-large
 ```
 
-Verify Ollama is running:
+Verify both are available:
+
 ```bash
 ollama list
-# Should show llama3.2 and mxbai-embed-large
 ```
 
 #### 4.2 Create a Python Virtual Environment
@@ -274,7 +281,7 @@ ollama list
 ```bash
 cd ../ragbot/LocalAIAgentWithRAG-main
 
-# Create venv
+# Create the virtual environment
 python -m venv venv
 
 # Activate — Windows
@@ -293,88 +300,89 @@ pip install -r requirements.txt
 #### 4.4 Configure Environment
 
 ```bash
-# Copy the example file and edit it
-copy .env.example .env    # Windows
-cp .env.example .env      # macOS/Linux
+# Windows
+copy .env.example .env
+
+# macOS / Linux
+cp .env.example .env
 ```
 
-The default settings work out of the box for most setups (Ollama on localhost, CPU mode). Edit `.env` only if you need to change the Ollama URL, model names, or GPU settings.
+The defaults work out of the box for most setups. Edit `.env` only if you need to change the Ollama URL, model names, or GPU settings.
 
-#### 4.5 Add Your Legal Documents
+#### 4.5 Add Legal Documents
 
-Place your PDF, DOCX, or TXT legal documents into the corresponding folders:
+Drop your PDF, DOCX, or TXT files into the matching folder:
 
 ```
 ragbot/LocalAIAgentWithRAG-main/legal_documents/
-├── pdfs/     ← Drop PDF files here
-├── docx/     ← Drop DOCX files here
-└── txt/      ← Drop TXT files here
+├── pdfs/     ← PDF files
+├── docx/     ← Word documents
+└── txt/      ← Plain text files
 ```
 
-> The vectorstore is **automatically rebuilt** when new or updated documents are detected. No manual indexing step required.
+> The vector store is **automatically rebuilt** whenever new documents are detected.
 
-#### 4.6 Start the RAG Worker Server
+#### 4.6 Start the RAG Worker
 
 ```bash
-# Make sure Ollama is running first!
+# Ensure Ollama is running first
 python worker_server.py
 ```
-> The RAG API runs on **`http://localhost:8008`**
 
-#### 4.7 (Optional) Test via CLI
+> Runs on **`http://localhost:8008`**
+
+#### 4.7 (Optional) CLI Test
 
 ```bash
 python main.py
 ```
-This launches an interactive command-line Q&A session using the loaded legal documents.
+
+Launches an interactive Q&A session directly in the terminal.
 
 ---
 
-### 5. Running All Services Together
+### Step 5 — Run All Services Together
 
 Open **three separate terminals**:
 
-| Terminal | Command | Directory |
-|---|---|---|
-| 1 — Backend | `npm run dev` | `backend/` |
-| 2 — Frontend | `npm run dev` | `frontend/` |
-| 3 — RAG Bot | `python worker_server.py` | `ragbot/LocalAIAgentWithRAG-main/` |
+| Terminal | Directory | Command |
+| :---: | :--- | :--- |
+| 1 | `backend/` | `npm run dev` |
+| 2 | `frontend/` | `npm run dev` |
+| 3 | `ragbot/LocalAIAgentWithRAG-main/` | `python worker_server.py` |
 
-Then open your browser at **`https://localhost:5173`**.
+Then visit **`https://localhost:5173`** in your browser.
 
 ---
 
 ## 🤖 RAG Bot API Reference
 
-The RAG worker server (`worker_server.py`) exposes a simple JSON API:
+The worker server exposes a lightweight JSON API:
 
 ### `GET /health`
-Check if the service is up.
+
+Returns service status.
 
 ```json
 { "ok": true }
 ```
 
 ### `POST /ask`
+
 Query the pre-loaded legal knowledge base.
 
-**Request:**
 ```json
+// Request
 { "question": "What are the fundamental rights under the Indian Constitution?" }
-```
 
-**Response:**
-```json
-{
-  "ok": true,
-  "answer": "1) Quick Answer\n...\n2) Easy Explanation\n...\n3) Sources\n..."
-}
+// Response
+{ "ok": true, "answer": "1) Quick Answer\n...\n2) Easy Explanation\n...\n3) Sources\n..." }
 ```
 
 ### `POST /session/upload`
-Upload a PDF for per-session querying (in-memory, no persistence).
 
-**Request:**
+Upload a PDF for per-session in-memory querying.
+
 ```json
 {
   "sessionId": "unique-session-id",
@@ -384,9 +392,9 @@ Upload a PDF for per-session querying (in-memory, no persistence).
 ```
 
 ### `POST /session/ask`
-Ask a question against a previously uploaded session document.
 
-**Request:**
+Query an uploaded session document.
+
 ```json
 {
   "sessionId": "unique-session-id",
@@ -395,6 +403,7 @@ Ask a question against a previously uploaded session document.
 ```
 
 ### `POST /session/clear`
+
 Clear a session and free its memory.
 
 ```json
@@ -403,21 +412,22 @@ Clear a session and free its memory.
 
 ---
 
-## 🗄️ Database Schemas
+## 🗄️ Database
 
-See [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) for the complete MongoDB schema definitions, including:
-- **User** (clients & lawyers)
-- **Appointment**
-- **Document**
-- **Review & Rating**
+See [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) for full MongoDB schema definitions:
+
+- **User** — clients & lawyers (roles, specializations, bar council ID)
+- **Appointment** — booking, status, payment, meeting link
+- **Document** — file URLs, access control, uploader reference
+- **Review & Rating** — star rating + comment per completed appointment
 
 ---
 
 ## 🔒 Security
 
-- Passwords hashed with **bcrypt** (never stored in plain text)
+- Passwords hashed with **bcrypt** — never stored in plain text
 - Authentication via **stateless JWTs** stored in HttpOnly cookies
-- File access via **presigned Cloudinary URLs** (time-limited, private)
+- File access via **presigned Cloudinary URLs** — time-limited & private
 - **CORS** strictly configured per environment
 - All secrets managed through `.env` files (gitignored)
 
@@ -428,16 +438,16 @@ See [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) for the complete MongoDB schema def
 Contributions are welcome!
 
 1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/AmazingFeature`
-3. Commit your changes: `git commit -m 'feat: Add AmazingFeature'`
-4. Push to the branch: `git push origin feature/AmazingFeature`
+2. Create a feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'feat: Add YourFeature'`
+4. Push the branch: `git push origin feature/YourFeature`
 5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ---
 
@@ -446,4 +456,3 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for more informati
 Made with ❤️ by **Kushal**
 
 </div>
-]]>
